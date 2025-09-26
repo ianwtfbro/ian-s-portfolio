@@ -3,184 +3,260 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ipingU - Inspired by SecInfos</title>
+<title>ipingU | Advanced Cybersecurity Training & Solutions</title>
 <style>
-  :root {
-    --blue: #1d4ed8;
-    --dark-bg: #0f172a;
-    --light-bg: #f8fafc;
-    --text-light: #f1f5f9;
-    --text-dark: #1e293b;
-  }
-  * {
-    box-sizing: border-box;
-    margin: 0; padding: 0;
-  }
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--light-bg);
-    color: var(--text-dark);
+  /* Reset & base styles */
+  *, *::before, *::after { box-sizing: border-box; }
+  body,html {
+    margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f7fa; color: #1e293b;
+    scroll-behavior: smooth;
   }
   a {
     text-decoration: none;
-    color: var(--blue);
-    transition: color 0.3s ease;
+    color: #3b82f6;
+    transition: color 0.3s;
   }
   a:hover {
     color: #2563eb;
   }
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    background-color: var(--dark-bg);
-    padding: 1rem 3rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;
+  img.logo {
+    height: 48px;
   }
-  nav img {
-    height: 45px;
-    cursor: pointer;
-  }
-  nav ul {
+  ul {
     list-style: none;
     display: flex;
     gap: 2rem;
   }
-  nav ul li a {
-    color: var(--text-light);
+  li {
     font-weight: 600;
+    cursor: pointer;
   }
-  nav ul li a:hover {
-    color: var(--blue);
+  li:hover {
+    color: #3b82f6;
   }
-  section {
-    padding: 6rem 3rem;
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
   }
-  #hero {
-    position: relative;
-    height: 100vh;
-    color: var(--text-light);
-    background: linear-gradient(120deg, #1e3a8a 60%, #2563eb 100%);
+
+  /* Navigation */
+  nav {
+    background: white;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    z-index: 1000;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Hero Section */
+  #hero {
+    height: 95vh;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
-    overflow: hidden;
+    position: relative;
   }
   #hero h1 {
     font-size: 3.5rem;
-    font-weight: 800;
+    font-weight: 900;
     margin-bottom: 1rem;
-    z-index: 10;
-    max-width: 90vw;
+    text-shadow: 0 0 20px #93c5fd;
   }
   #hero p {
-    font-weight: 500;
     font-size: 1.25rem;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
-    z-index: 10;
   }
-  #hero .cta-buttons > a {
-    padding: 1rem 2.5rem;
-    margin: 0 1rem;
-    border-radius: 32px;
-    background: var(--text-light);
-    color: var(--dark-bg);
-    font-weight: 700;
-    font-size: 1rem;
-    box-shadow: 0 15px 45px rgb(100 116 139 / 0.15);
-    transition: background-color 0.3s ease;
-    position: relative;
-    z-index: 10;
-  }
-  #hero .cta-buttons > a:hover {
-    background: var(--blue);
-    color: var(--text-light);
-    box-shadow: 0 10px 30px var(--blue);
-  }
-  #network-canvas {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 1;
-  }
-  /* Services */
-  #services {
-    background-color: var(--light-bg);
-  }
-  #services h2 {
-    color: var(--blue);
-    font-weight: 900;
-    font-size: 2.75rem;
-    max-width: 1000px;
-    margin: 0 auto 2rem auto;
-    text-align: center;
-  }
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-    gap: 3rem;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-  .service-card {
+  #hero .btn-primary {
     background: white;
-    box-shadow: 0 10px 40px rgba(37, 99, 235, 0.15);
-    border-radius: 14px;
-    padding: 2rem 1.75rem;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-    cursor: default;
-  }
-  .service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 25px 60px rgba(37, 99, 235, 0.35);
-  }
-  .service-icon {
-    font-size: 3.75rem;
-    color: var(--blue);
-    margin-bottom: 1rem;
-  }
-  .service-title {
-    font-size: 1.5rem;
+    color: #2563eb;
+    padding: 1rem 3rem;
     font-weight: 800;
-    margin-bottom: 0.5rem;
+    font-size: 1.125rem;
+    border-radius: 9999px;
+    box-shadow: 0 0 15px #a5b4fc;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    display: inline-block;
   }
-  .service-desc {
-    font-size: 1.1rem;
-    color: #475569;
-  }
-  /* Footer */
-  footer {
-    background: var(--dark-bg);
-    color: var(--text-light);
-    padding: 2rem 3rem;
-    text-align: center;
-    font-size: 0.9rem;
-  }
-  footer a {
-    color: var(--blue);
-    text-decoration: none;
-  }
-  footer a:hover {
-    text-decoration: underline;
+  #hero .btn-primary:hover {
+    background-color: #1e40af;
+    color: white;
+    box-shadow: 0 0 30px #6366f1;
   }
 
-  /* Responsive tweaks */
+  /* Section Titles */
+  h2.section-title {
+    text-align: center;
+    font-size: 2.75rem;
+    font-weight: 900;
+    margin-bottom: 2rem;
+    color: #2563eb;
+  }
+
+  /* Why Section */
+  #why {
+    background: white;
+    padding: 4rem 2rem;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto 3rem;
+  }
+  #why p {
+    font-size: 1.25rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  /* Courses Section */
+  #courses {
+    background: #eff6ff;
+    padding: 6rem 2rem;
+  }
+  .courses-grid {
+    display: grid;
+    max-width: 1100px;
+    margin: 0 auto;
+    grid-template-columns: repeat(auto-fill,minmax(320px,1fr));
+    gap: 2.5rem;
+  }
+  .course-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 12px rgb(0 0 0 / 0.06);
+    text-align: left;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+  }
+  .course-card:hover {
+    box-shadow: 0 6px 25px rgb(37 99 235 / 0.35);
+  }
+  .course-title {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #1e293b;
+    margin-bottom: 0.75rem;
+  }
+  .course-desc {
+    color: #64748b;
+    font-size: 1rem;
+  }
+
+  /* Services Section */
+  #services {
+    background: white;
+    padding: 6rem 2rem;
+    max-width: 1000px;
+    margin: 0 auto 3rem;
+  }
+  .service-flex {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .service-box {
+    flex: 1 1 45%;
+    background: #e0e7ff;
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(59, 130, 246, 0.25);
+    transition: box-shadow 0.3s ease;
+    cursor: default;
+  }
+  .service-box:hover {
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.45);
+  }
+  .service-box h3 {
+    font-weight: 800;
+    color: #2563eb;
+    margin-bottom: 1rem;
+  }
+  .service-box p {
+    color: #475569;
+  }
+
+  /* Testimonials Section */
+  #testimonials {
+    background: #e0e7ff;
+    padding: 6rem 2rem;
+    max-width: 900px;
+    margin: 0 auto 3rem;
+    border-radius: 16px;
+  }
+  .testimonial {
+    font-style: italic;
+    color: #334155;
+    margin-bottom: 1rem;
+    font-size: 1.125rem;
+  }
+  .testimonial-author {
+    font-weight: 700;
+    color: #2563eb;
+    text-align: right;
+  }
+
+  /* Contact Section */
+  #contact {
+    background: #1e293b;
+    color: #94a3b8;
+    padding: 5rem 2rem;
+    text-align: center;
+  }
+  #contact h2 {
+    color: #3b82f6;
+    font-size: 2.75rem;
+    margin-bottom: 2rem;
+  }
+  #contact p {
+    font-size: 1.125rem;
+  }
+  #contact a {
+    color: #60a5fa;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+  #contact a:hover {
+    color: #3b82f6;
+  }
+
+  /* Footer */
+  footer {
+    background: #111827;
+    color: #64748b;
+    text-align: center;
+    padding: 1.5rem 2rem;
+    font-size: 0.875rem;
+  }
+
+  /* Responsive */
   @media (max-width: 768px) {
-    #hero h1 {
-      font-size: 2.3rem;
-    }
-    #hero p {
-      font-size: 1rem;
-    }
     nav ul {
-      gap: 1.25rem;
+      gap: 1rem;
+    }
+    #hero h1 {
+      font-size: 2.5rem;
+    }
+    #services .service-flex {
+      flex-direction: column;
+    }
+    .service-box {
+      flex: 1 1 100%;
+    }
+    .courses-grid {
+      grid-template-columns: 1fr !important;
     }
   }
 </style>
@@ -189,117 +265,100 @@
 <body>
 
 <nav>
-  <img src="https://www.ipingu.in/logo512.png" alt="ipingU Logo" />
-  <ul>
-    <li><a href="#hero">Home</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <div class="container">
+    <img src="https://www.ipingu.in/logo512.png" alt="ipingU Logo" class="logo" />
+    <ul class="nav-menu">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#why">Why ipingU</a></li>
+      <li><a href="#courses">Training Programs</a></li>
+      <li><a href="#services">Cybersecurity Solutions</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
 </nav>
 
-<section id="hero">
-  <canvas id="network-canvas"></canvas>
-  <div class="content">
-    <h1>Next-Gen AI-Powered Cybersecurity Intelligence</h1>
-    <p>Guard your enterprise with ipingU’s advanced digital defense and real-time threat monitoring.</p>
-    <div class="cta-buttons">
-      <a href="#services">Learn More</a>
-      <a href="mailto:contact@ipingu.in">Contact Us</a>
+<section id="hero" aria-label="Hero section with tagline and call to action">
+  <div class="content container">
+    <h1>Guardians of the Digital Realm</h1>
+    <p>Real-time AI-powered cybersecurity solutions guarding your enterprise from evolving threats.</p>
+    <a href="#why" class="btn-primary">Discover More</a>
+  </div>
+</section>
+
+<section id="why" aria-label="Unique value proposition">
+  <div class="container">
+    <h2 class="section-title">Why ipingU?</h2>
+    <p>We deliver <strong>comprehensive cybersecurity solutions</strong> designed to keep your business safe from evolving threats. From <strong>real-time threat detection and AI-powered monitoring</strong> to <strong>secure network design, vulnerability assessments</strong>, and <strong>rapid incident response</strong>, our services help you stay protected, compliant, and confident.</p>
+    <p>Our experts respond to security incidents within minutes to minimize disruption and data loss. A partner committed to protecting your reputation and business. Our team brings certified experience and deep industry knowledge to every engagement. We collaborate closely with you to understand your goals and build solutions that fit your unique needs.</p>
+  </div>
+</section>
+
+<section id="courses" aria-label="Cybersecurity training courses">
+  <div class="container">
+    <h2 class="section-title">Training Programs</h2>
+    <div class="courses-grid">
+      <article class="course-card">
+        <h3 class="course-title">Cyber Threat Intelligence</h3>
+        <p class="course-desc">Understand evolving cyber threats, learn defensive strategies, and how to analyze intelligence data.</p>
+      </article>
+      <article class="course-card">
+        <h3 class="course-title">Network Security</h3>
+        <p class="course-desc">Learn to protect digital infrastructure with cutting-edge network defense and monitoring techniques.</p>
+      </article>
+      <article class="course-card">
+        <h3 class="course-title">Ethical Hacking</h3>
+        <p class="course-desc">Gain hands-on knowledge of penetration testing and vulnerability identification.</p>
+      </article>
     </div>
   </div>
 </section>
 
-<section id="services">
-  <h2>Our Cybersecurity Services</h2>
-  <div class="services-grid">
-    <div class="service-card">
-      <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
-      <div class="service-title">Threat Intelligence</div>
-      <div class="service-desc">Identify and proactively counter emerging cyber threats using AI-driven analytics and expert insights.</div>
-    </div>
-    <div class="service-card">
-      <div class="service-icon"><i class="fas fa-network-wired"></i></div>
-      <div class="service-title">Network Security</div>
-      <div class="service-desc">Comprehensive network monitoring and defense solutions to secure your digital infrastructure.</div>
-    </div>
-    <div class="service-card">
-      <div class="service-icon"><i class="fas fa-user-shield"></i></div>
-      <div class="service-title">Penetration Testing</div>
-      <div class="service-desc">Simulate cyber attacks to identify vulnerabilities before the adversaries do.</div>
-    </div>
-    <div class="service-card">
-      <div class="service-icon"><i class="fas fa-rocket"></i></div>
-      <div class="service-title">Incident Response</div>
-      <div class="service-desc">Rapid mitigation and containment to minimize the impact of security incidents.</div>
+<section id="services" aria-label="Cybersecurity solutions offered">
+  <div class="container">
+    <h2 class="section-title">Cybersecurity Solutions</h2>
+    <div class="service-flex">
+      <div class="service-box">
+        <h3>Network Security</h3>
+        <p>Continuous monitoring and defense of your digital assets and infrastructure.</p>
+      </div>
+      <div class="service-box">
+        <h3>Cybersecurity Operations</h3>
+        <p>Full lifecycle threat monitoring and incident response for sustained protection.</p>
+      </div>
+      <div class="service-box">
+        <h3>Security Consulting and Audits</h3>
+        <p>Identify vulnerabilities, build strategies, ensure compliance, and strengthen your defenses.</p>
+      </div>
+      <div class="service-box">
+        <h3>Compliance Management</h3>
+        <p>Align business processes with industry security regulations to manage risk effectively.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="contact" style="padding: 5rem 3rem; text-align: center; background:#0f172a; color:#9ca3af;">
-  <h2 style="color:#3b82f6; font-size: 2.7rem; margin-bottom:1rem;">Contact ipingU</h2>
-  <p>Reach out today for enterprise cybersecurity solutions and expert guidance.</p>
-  <p>Email: <a href="mailto:contact@ipingu.in">contact@ipingu.in</a></p>
-  <p>Phone: <a href="tel:+911234567890">+91 1234567890</a></p>
+<section id="testimonials" aria-label="Client testimonials">
+  <div class="container">
+    <h2 class="section-title">What Our Clients Say</h2>
+    <blockquote class="testimonial">"ipingU's AI-driven threat intelligence has revolutionized our cybersecurity posture. We feel confidently protected 24/7."</blockquote>
+    <p class="testimonial-author">– CIO, Global FinTech</p>
+    <blockquote class="testimonial">"Their training programs prepared our staff to expertly handle real world cyber threats and vulnerabilities."</blockquote>
+    <p class="testimonial-author">– Head of Security, EnterpriseTech</p>
+  </div>
+</section>
+
+<section id="contact" aria-label="Contact info and form">
+  <div class="container">
+    <h2 class="section-title">Contact ipingU</h2>
+    <p>Email us at <a href="mailto:contact@ipingu.in">contact@ipingu.in</a> or call at <a href="tel:+919611781631">+91 96117 81631</a></p>
+    <p>Address: No 6, Ward No 65BDA 1st Stage, BTM Layout Bangalore South, Karnataka, India - 560068.</p>
+  </div>
 </section>
 
 <footer>
-  &copy; 2025 ipingU. All rights reserved. | <a href="#hero">Back to Top</a>
+  &copy; 2025 ipingU. All rights reserved.
 </footer>
-
-<script>
-  // Animated digital network background on hero canvas
-  const canvas = document.getElementById('network-canvas');
-  const ctx = canvas.getContext('2d');
-
-  function resizeCanvas(){
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
-
-  const points = [];
-  for(let i=0;i<100;i++){
-    points.push({
-      x: Math.random()*canvas.width,
-      y: Math.random()*canvas.height,
-      vx: (Math.random()-0.5)*0.3,
-      vy: (Math.random()-0.5)*0.3,
-    });
-  }
-
-  function animate(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    points.forEach(p=>{
-      p.x+=p.vx;
-      p.y+=p.vy;
-      if(p.x<0 || p.x>canvas.width) p.vx*=-1;
-      if(p.y<0 || p.y>canvas.height) p.vy*=-1;
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,3,0,Math.PI*2);
-      ctx.fillStyle='rgba(59,130,246,0.75)';
-      ctx.fill();
-    });
-
-    for(let i=0;i<points.length;i++){
-      for(let j=i+1;j<points.length;j++){
-        const dx = points[i].x - points[j].x;
-        const dy = points[i].y - points[j].y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        if(dist<90){
-          ctx.strokeStyle = `rgba(59,130,246,${1-dist/90})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(points[i].x,points[i].y);
-          ctx.lineTo(points[j].x,points[j].y);
-          ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(animate);
-  }
-  animate();
-</script>
 
 </body>
 </html>
