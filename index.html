@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ayan - Creative Portfolio</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    /* New minimal, fresh color palette */
+    :root {
+      --color-primary: #2dd4bf; /* teal */
+      --color-accent: #fb7185;  /* coral */
+      --color-bg: #f5f7fa;      /* soft gray */
+      --color-text: #334155;    /* slate */
+    }
+    
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: 'Inter', sans-serif;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    
+    nav {
+      background: white;
+      box-shadow: 0 4px 12px rgb(45 212 191 / 0.25);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 50;
+    }
+    
+    nav h1 {
+      font-weight: 900;
+      font-size: 1.75rem;
+      color: var(--color-primary);
+      user-select: none;
+    }
+    
+    .nav-link {
+      position: relative;
+      color: var(--color-text);
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--color-primary);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Active nav link highlight handled in JS (optional) */
+    
+    /* Mobile menu toggle */
+    #mobile-menu {
+      display: none;
+      background: white;
+      box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+    }
+    #mobile-menu.show {
+      display: block;
+    }
+    
+    /* Hero Section */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(135deg, var(--color-primary), #15b6a2);
+      color: white;
+      padding: 1rem;
+      position: relative;
+      overflow: visible;
+    }
+    
+    .hero-icon {
+      width: 10rem;
+      height: 10rem;
+      margin: 0 auto 2rem;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #14b8a6, #099a91);
+      box-shadow:
+        6px 6px 15px #0a756b,
+        -6px -6px 15px #20d3be;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: float 4s ease-in-out infinite;
+      perspective: 1200px;
+      transform-style: preserve-3d;
+    }
+    
+    /* Floating 3D effect */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotateX(0deg) rotateY(0deg);
+      }
+      50% {
+        transform: translateY(-20px) rotateX(8deg) rotateY(15deg);
+      }
+    }
+    
+    h1.hero-name {
+      font-weight: 900;
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 6px rgb(0 0 0 / 0.15);
+    }
+    
+    p.hero-subtitle {
+      font-weight: 500;
+      font-size: 1.5rem;
+      opacity: 0.85;
+      margin-bottom: 1.5rem;
+      max-width: 28rem;
+      margin-left: auto;
+      margin-right: auto;
+      text-shadow: 1px 1px 4px rgb(0 0 0 / 0.1);
+    }
+    
+    .btn-primary, .btn-secondary {
+      font-weight: 700;
+      padding: 1rem 2rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 5px 15px rgb(45 212 191 / 0.4);
+      user-select: none;
+      display: inline-block;
+      margin: 0 0.5rem;
+    }
+    
+    .btn-primary {
+      background: white;
+      color: var(--color-primary);
+    }
+    .btn-primary:hover {
+      background: var(--color-primary);
+      color: white;
+      box-shadow: 0 10px 20px rgb(43 194 190 / 0.6);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      border: 3px solid white;
+      color: white;
+      text-shadow: 1px 1px 4px rgb(0 0 0 / 0.15);
+    }
+    .btn-secondary:hover {
+      background: white;
+      color: var(--color-primary);
+    }
+    
+    /* Section Titles */
+    section h2 {
+      font-weight: 800;
+      font-size: 2.5rem;
+      color: var(--color-text);
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    
+    .section-underline {
+      width: 6rem;
+      height: 4px;
+      background: var(--color-primary);
+      border-radius: 10px;
+      margin: 0.25rem auto 2rem;
+    }
+    
+    /* Fade-in for sections */
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+      will-change: opacity, transform;
+    }
+    .fade-in-section.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+    
+    /* Cards */
+    .card-hover {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 15px 35px rgb(32 132 132 / 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card-hover:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 25px 50px rgb(45 212 191 / 0.3);
+    }
+    
+    /* Portfolio Overlay Overlay */
+    .portfolio-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1rem;
+      box-shadow: 0 15px 35px rgb(32 132 132 / 0.1);
+      transition: transform 0.3s ease;
+    }
+    .portfolio-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(45deg, rgba(45, 212, 191, 0.9), rgba(251, 113, 133, 0.9));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.25rem;
+      border-radius: 1rem;
+    }
+    .portfolio-item:hover .portfolio-overlay {
+      opacity: 1;
+    }
+    
+    /* Skill bars */
+    .skill-bar {
+      background: #d1eaea;
+      border-radius: 9999px;
+      overflow: hidden;
+      height: 1rem;
+      margin-bottom: 1rem;
+    }
+    .skill-progress {
+      background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+      height: 100%;
+      width: 0;
+      border-radius: 9999px;
+      transition: width 2s ease;
+    }
+    
+    /* Skill bars animate when visible */
+    
+    /* Contact section */
+    #contact {
+      background: var(--color-primary);
+      color: white;
+      padding: 4rem 1rem;
+    }
+    #contact h2,
+    #contact div {
+      color: white;
+    }
+    #contact input, #contact select, #contact textarea {
+      width: 100%;
+      border-radius: 0.75rem;
+      border: none;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      outline: none;
+    }
+    #contact button {
+      border-radius: 9999px;
+      background: white;
+      color: var(--color-primary);
+      font-weight: 700;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+    #contact button:hover {
+      background-color: var(--color-accent);
+      color: white;
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--color-text);
+      color: #94a3b8;
+      padding: 3rem 1rem;
+      font-size: 0.9rem;
+    }
+    footer h3 {
+      color: var(--color-primary);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    footer a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    footer a:hover {
+      color: var(--color-primary);
+    }
+    
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="p-4 flex justify-between items-center max-w-6xl mx-auto">
+    <h1>Ayan</h1>
+    <div class="hidden md:flex space-x-8">
+      <a href="#home" class="nav-link">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#portfolio" class="nav-link">Portfolio</a>
+      <a href="#skills" class="nav-link">Skills</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="home" class="fade-in-section">
+    <div>
+      <div class="hero-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" width="80" height="80">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 8v4l3 3"></path>
+        </svg>
+      </div>
+      <h1 class="hero-name">Ayan</h1>
+      <p class="hero-subtitle">Graphic Designer & Video Editor</p>
+      <p class="max-w-xl mx-auto mb-6 opacity-80">Creating stunning visual experiences through innovative design and compelling video storytelling.</p>
+      <div>
+        <a href="#portfolio" class="btn-primary">View My Work</a>
+        <a href="#contact" class="btn-secondary">Get In Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="fade-in-section max-w-5xl mx-auto my-20 p-6">
+    <h2>About Me</h2>
+    <div class="section-underline"></div>
+    <div class="md:flex md:space-x-12 items-center">
+      <div class="md:w-1/2 bg-gradient-to-br from-teal-400 to-coral-500 p-16 rounded-3xl flex items-center justify-center shadow-lg">
+        <svg width="100" height="100" fill="white" viewBox="0 0 24 24"><path d="M12 12a3 3 0 11-3-3 3 3 0 013 3zm0 2c-4 0-8 2-8 4v2h16v-2c0-2-4-4-8-4z"/></svg>
+      </div>
+      <div class="md:w-1/2 mt-8 md:mt-0">
+        <h3 class="text-2xl font-semibold mb-4">Creative Professional with 5+ Years of Experience</h3>
+        <p class="mb-4">I'm a passionate creative professional specializing in graphic design and video editing. I help brands tell stories that inspire.</p>
+        <p>Expert in brand identity, marketing materials, promotional videos, and social content with a focus on meaningful storytelling.</p>
+        <div class="flex space-x-12 mt-8">
+          <div class="text-center">
+            <div class="text-4xl text-primary font-extrabold counter" data-target="150">0</div>
+            <div>Projects Completed</div>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl text-primary font-extrabold counter" data-target="50">0</div>
+            <div>Happy Clients</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="portfolio" class="fade-in-section max-w-6xl mx-auto my-20 px-6">
+    <h2>My Portfolio</h2>
+    <div class="section-underline"></div>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="portfolio-item card-hover" data-category="design">
+        <div class="portfolio-overlay">
+          <h3>Brand Identity Design</h3>
+          <p>Complete brand package for tech startup</p>
+        </div>
+        <div class="p-4">
+          <h3 class="text-xl font-semibold">Brand Identity Design</h3>
+          <p>Modern logos & guidelines for innovative tech</p>
+        </div>
+      </div>
+      <div class="portfolio-item card-hover" data-category="video">
+        <div class="portfolio-overlay">
+          <h3>Product Commercial</h3>
+          <p>30-second commercial for luxury watch</p>
+        </div>
+        <div class="p-4">
+          <h3 class="text-xl font-semibold">Product Commercial</h3>
+          <p>High-end commercial video for a luxury collection</p>
+        </div>
+      </div>
+      <div class="portfolio-item card-hover" data-category="design">
+        <div class="portfolio-overlay">
+          <h3>Web Design</h3>
+          <p>Responsive website for creative agency</p>
+        </div>
+        <div class="p-4">
+          <h3 class="text-xl font-semibold">Web Design</h3>
+          <p>Modern, responsive and clean design</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="fade-in-section max-w-6xl mx-auto my-20 px-6 grid md:grid-cols-2 gap-10">
+    <div>
+      <h2>Design Skills</h2>
+      <div>
+        <div>Adobe Photoshop</div>
+        <div class="skill-bar"><div class="skill-progress" style="width: 95%"></div></div>
+      </div>
+      <div>
+        <div>Adobe Illustrator</div>
+        <div class="skill-bar"><div class="skill-progress" style="width: 90%"></div></div>
+      </div>
+      <div>
+        <div>Adobe InDesign</div>
+        <div class="skill-bar"><div class="skill-progress" style="width: 85%"></div></div>
+      </div>
+      <div>
+        <div>Figma</div>
+        <div class="skill-bar"><div class="skill-progress" style="width: 88%"></div></div>
+      </div>
+    </div>
+    <div>
+      <h2>Video Editing Skills</h2>
+      <div>
+        <div>Adobe Premiere Pro</div>
+        <div class="skill-bar"><div class="skill-progress" style="width: 92%"></div></div>
+      </div>
+      <div>
+        <div>Adobe After Effects</div>
+        <div class="skill-bar"><div class="skill-progress" style="width: 87%"></div></div>
+      </div>
+      <div>
+        <div>Final Cut Pro</div>
+        <div class="skill-bar"><div class="skill-progress" style="width: 80%"></div></div>
+      </div>
+      <div>
+        <div>DaVinci Resolve</div>
+        <div class="skill-bar"><div class="skill-progress" style="width: 75%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="fade-in-section max-w-5xl mx-auto rounded-xl p-8 mt-20">
+    <h2>Let's Work Together</h2>
+    <div class="section-underline"></div>
+    <p class="max-w-xl mx-auto mb-8 text-center">Ready to bring your creative vision to life? Let's discuss your next project.</p>
+
+    <form id="contact-form" class="space-y-6 max-w-xl mx-auto">
+      <input type="text" id="name" name="name" placeholder="Your Name" required />
+      <input type="email" id="email" name="email" placeholder="your@email.com" required />
+      <select id="project" name="project" required>
+        <option value="" disabled selected>Select Project Type</option>
+        <option value="graphic-design">Graphic Design</option>
+        <option value="video-editing">Video Editing</option>
+        <option value="both">Both Design & Video</option>
+        <option value="consultation">Consultation</option>
+      </select>
+      <textarea id="message" name="message" rows="4" placeholder="Tell me about your project..." required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center mt-32 px-8">
+    <p>&copy; 2025 Ayan. All rights reserved.</p>
+  </footer>
+
+<script>
+  // Mobile menu logic (if you want mobile menu)
+  // Fade-in animation on scroll
+  const faders = document.querySelectorAll('.fade-in-section');
+  const appearOptions = {
+    threshold: 0.3,
+    rootMargin: "0px 0px -100px 0px"
+  };
+
+  const appearOnScroll = new IntersectionObserver((entries, appearOnScroll) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        appearOnScroll.unobserve(entry.target);
+      }
+    });
+  }, appearOptions);
+
+  faders.forEach(fader => {
+    appearOnScroll.observe(fader);
+  });
+
+  // Animate counters when visible
+  const counters = document.querySelectorAll('.counter');
+  counters.forEach(counter => {
+    const updateCount = () => {
+      const target = +counter.getAttribute('data-target');
+      const count = +counter.innerText;
+      const increment = target / 200;
+
+      if(count < target) {
+        counter.innerText = Math.ceil(count + increment);
+        setTimeout(updateCount, 10);
+      } else {
+        counter.innerText = target;
+      }
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          updateCount();
+          observer.unobserve(counter);
+        }
+      });
+    }, {threshold: 1});
+
+    observer.observe(counter);
+  });
+
+  // Animate skill bars filling
+  const skillProgressBars = document.querySelectorAll('.skill-progress');
+  const skillObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        skillProgressBars.forEach((bar, i) => {
+          setTimeout(() => {
+            bar.style.width = bar.getAttribute('style').split('width: ')[1];
+          }, i * 300);
+        });
+        skillObserver.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.5});
+  skillObserver.observe(document.getElementById('skills'));
+
+  // Contact form submission simulation
+  document.getElementById('contact-form').addEventListener('submit', e => {
+    e.preventDefault();
+    alert("Thank you for contacting! I'll get back to you soon.");
+    e.target.reset();
+  });
+</script>
+
+</body>
+</html>
